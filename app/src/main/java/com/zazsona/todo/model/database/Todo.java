@@ -1,21 +1,25 @@
 package com.zazsona.todo.model.database;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Entity(tableName = "todos")
-public class Todo
+public class Todo implements Serializable
 {
     @PrimaryKey
-    private final UUID id;
+    @NonNull
+    private final String id;
     private final String name;
     private final String description;
     private final long secondsSetEpoch;
     private boolean complete;
 
-    public Todo(UUID id, String name, String description, long secondsSetEpoch, boolean complete)
+    public Todo(@NonNull String id, String name, String description, long secondsSetEpoch, boolean complete)
     {
         this.id = id;
         this.name = name;
@@ -26,9 +30,9 @@ public class Todo
 
     /**
      * Gets id
-     * @return id UUID
+     * @return id
      */
-    public UUID getID()
+    public String getId()
     {
         return id;
     }

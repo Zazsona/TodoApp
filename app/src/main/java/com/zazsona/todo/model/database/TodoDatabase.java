@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 import com.zazsona.todo.model.repository.TodoRepository;
 
-@Database(entities = Todo.class, version = 1)
+@Database(entities = {Todo.class}, version = 1)
 public abstract class TodoDatabase extends RoomDatabase
 {
     private static TodoDatabase databaseInstance;

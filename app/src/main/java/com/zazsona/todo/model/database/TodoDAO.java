@@ -17,7 +17,7 @@ public interface TodoDAO
     LiveData<List<Todo>> getTodos();
 
     @Query("SELECT * FROM todos WHERE id = :id")
-    LiveData<Todo> getTodoById(UUID id);
+    LiveData<Todo> getTodoById(String id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addTodo(Todo todo);
@@ -26,5 +26,5 @@ public interface TodoDAO
     void updateTodo(Todo todo);
 
     @Query("DELETE FROM todos WHERE id = :id")
-    void removeTodo(UUID id);
+    void removeTodo(String id);
 }
