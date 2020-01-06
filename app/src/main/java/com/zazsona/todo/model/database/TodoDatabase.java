@@ -22,10 +22,9 @@ public abstract class TodoDatabase extends RoomDatabase
         return databaseInstance;
     }
 
+    /**
+     * Gets the Data Access Object for the database.
+     * @return
+     */
     public abstract TodoDAO todoDAO();
-
-    public static void destroyInstance()
-    {
-        databaseInstance = null;
-    }
 }
