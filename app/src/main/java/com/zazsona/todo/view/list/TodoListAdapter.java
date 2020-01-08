@@ -1,4 +1,4 @@
-package com.zazsona.todo.view;
+package com.zazsona.todo.view.list;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.zazsona.todo.R;
 import com.zazsona.todo.model.database.Todo;
+import com.zazsona.todo.view.detail.TodoDetailActivity;
 
 import java.util.List;
 
@@ -44,13 +45,13 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final TodoViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull final TodoViewHolder holder, final int position)
     {
         final Todo mTodo = mTodos.get(position);
         holder.vTodoTitle.setText(mTodo.getName());
 
         String descriptionPreview = (mTodo.getDescription().length() > 20) ? mTodo.getDescription().substring(0, 30) : mTodo.getDescription();
-        descriptionPreview = descriptionPreview.replace("\n", " ");
+        descriptionPreview = descriptionPreview.replace("\n", " "); //Generate a small blurb to preview on the list
         holder.vTodoBlurb.setText(descriptionPreview);
 
         if (mTodo.isComplete())
@@ -66,7 +67,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoVi
             @Override
             public void onClick(View view)
             {
-                Intent detailIntent = TodoDetailActivity.newIntent(holder.vView.getContext(), mTodo);
+                Intent detailIntent = TodoDetailActivity.newIntent(holder.vView.getContext(), position);
                 holder.vView.getContext().startActivity(detailIntent);
             }
         });

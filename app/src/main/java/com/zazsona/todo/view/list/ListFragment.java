@@ -1,10 +1,10 @@
-package com.zazsona.todo.view;
+package com.zazsona.todo.view.list;
 
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.zazsona.todo.R;
 import com.zazsona.todo.model.database.Todo;
-import com.zazsona.todo.model.repository.TodoRepository;
 import com.zazsona.todo.viewmodel.ListViewModel;
 
 import java.util.List;
@@ -31,14 +30,6 @@ public class ListFragment extends Fragment
 
     private ListFragmentListener mListener;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        if (savedInstanceState != null)
-        {
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -47,8 +38,8 @@ public class ListFragment extends Fragment
         View vView = inflater.inflate(R.layout.fragment_list, container, false);
         vAddButton = vView.findViewById(R.id.btnAddTodo);
         vTodosList = vView.findViewById(R.id.ryclrTodos);
-        vTodosList.setAdapter(vListAdapter);
         vTodosList.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
         vListAdapter = new TodoListAdapter(this.getContext());
         mViewModel.getTodos().observe(this.getViewLifecycleOwner(), new Observer<List<Todo>>()
         {
@@ -56,7 +47,7 @@ public class ListFragment extends Fragment
             public void onChanged(List<Todo> todos)
             {
                 vListAdapter.setTodos(todos);
-                vTodosList.setAdapter(vListAdapter);
+                vTodosList.setAdapter(vListAdapter);        //Update the RecylerList when the database changes
             }
         });
         vAddButton.setOnClickListener(new View.OnClickListener()
@@ -64,14 +55,14 @@ public class ListFragment extends Fragment
             @Override
             public void onClick(View view)
             {
-                mListener.openTodo(null);
+                mListener.addTodo();
             }
         });
         return vView;
     }
 
     @Override
-    public void onAttach(Context context)
+    public void onAttach(@NonNull Context context)
     {
         super.onAttach(context);
         if (context instanceof ListFragmentListener)
@@ -93,6 +84,8 @@ public class ListFragment extends Fragment
 
     public interface ListFragmentListener
     {
-        void openTodo(Todo todo);
+        void openTodo(int todoIndex);
+
+        void addTodo();
     }
 }

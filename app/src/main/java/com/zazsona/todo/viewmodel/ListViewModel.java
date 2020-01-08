@@ -21,6 +21,10 @@ public class ListViewModel extends AndroidViewModel
         todoRepository = new TodoRepository(application);
     }
 
+    /**
+     * Gets a list of all Todos
+     * @return the Todos
+     */
     public LiveData<List<Todo>> getTodos()
     {
         return todoRepository.getTodos();
