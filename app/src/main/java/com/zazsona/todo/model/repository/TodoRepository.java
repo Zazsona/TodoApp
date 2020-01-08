@@ -65,11 +65,11 @@ public class TodoRepository
 
     /**
      * Removes the {@link Todo} defined by the ID from the {@link TodoDatabase}
-     * @param id the UUID for the Todo
+     * @param todo the Todo
      */
-    public void removeTodo(String id)
+    public void removeTodo(Todo todo)
     {
-        todoDAO.removeTodo(id);
+        new DatabaseAsyncTask(todoDAO, false, true, false).execute(todo);
     }
 
     /**
@@ -78,7 +78,7 @@ public class TodoRepository
      */
     public void updateTodo(Todo todo)
     {
-        todoDAO.updateTodo(todo);
+        new DatabaseAsyncTask(todoDAO, false, false, true).execute(todo);
     }
 
     private static class DatabaseAsyncTask extends AsyncTask<Todo, Void, Void>

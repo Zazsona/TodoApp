@@ -6,13 +6,16 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.zazsona.todo.model.repository.TodoRepository;
-
 @Database(entities = {Todo.class}, version = 1)
 public abstract class TodoDatabase extends RoomDatabase
 {
     private static TodoDatabase databaseInstance;
 
+    /**
+     * Gets the database instance
+     * @param context the application context
+     * @return the database
+     */
     public static TodoDatabase getInstance(Context context)
     {
         if (databaseInstance == null)
@@ -24,7 +27,7 @@ public abstract class TodoDatabase extends RoomDatabase
 
     /**
      * Gets the Data Access Object for the database.
-     * @return
+     * @return the DAO
      */
     public abstract TodoDAO todoDAO();
 }

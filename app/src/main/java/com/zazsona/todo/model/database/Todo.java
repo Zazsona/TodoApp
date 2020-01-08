@@ -1,12 +1,10 @@
 package com.zazsona.todo.model.database;
 
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 @Entity(tableName = "todos")
 public class Todo implements Serializable
@@ -14,9 +12,9 @@ public class Todo implements Serializable
     @PrimaryKey
     @NonNull
     private final String id;
-    private final String name;
-    private final String description;
-    private final long secondsSetEpoch;
+    private String name;
+    private String description;
+    private long secondsSetEpoch;
     private boolean complete;
 
     public Todo(@NonNull String id, String name, String description, long secondsSetEpoch, boolean complete)
@@ -32,6 +30,7 @@ public class Todo implements Serializable
      * Gets id
      * @return id
      */
+    @NonNull
     public String getId()
     {
         return id;
@@ -71,5 +70,45 @@ public class Todo implements Serializable
     public boolean isComplete()
     {
         return complete;
+    }
+
+    /**
+     * Sets the value of name
+     *
+     * @param name the value to set
+     */
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    /**
+     * Sets the value of description
+     *
+     * @param description the value to set
+     */
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+
+    /**
+     * Sets the value of secondsSetEpoch
+     *
+     * @param secondsSetEpoch the value to set
+     */
+    public void setSecondsSetEpoch(long secondsSetEpoch)
+    {
+        this.secondsSetEpoch = secondsSetEpoch;
+    }
+
+    /**
+     * Sets the value of complete
+     *
+     * @param complete the value to set
+     */
+    public void setComplete(boolean complete)
+    {
+        this.complete = complete;
     }
 }
