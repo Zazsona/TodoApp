@@ -1,7 +1,5 @@
-package com.zazsona.todo.view;
+package com.zazsona.todo.view.detail;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -21,7 +19,7 @@ import com.zazsona.todo.viewmodel.DetailViewModel;
 public class TodoDetailFragment extends Fragment
 {
     private static final String TODO_PARAM = "com.zazsona.todo.view.tododetailfragment.todo";
-    private Todo mTodo;
+    private Todo mTodo; //Null indicates a new Todo
 
     private EditText vTitle;
     private EditText vDesc;
@@ -29,7 +27,6 @@ public class TodoDetailFragment extends Fragment
     private Button vSave;
     private Button vDelete;
 
-    private TodoDetailFragmentListener mListener;
     private DetailViewModel mViewModel;
 
     public TodoDetailFragment()
@@ -74,7 +71,7 @@ public class TodoDetailFragment extends Fragment
         if (mTodo != null)
         {
             vTitle.setText(mTodo.getName());
-            vDesc.setText(mTodo.getDescription());
+            vDesc.setText(mTodo.getDescription());      //Load Todo
             vComplete.setChecked(mTodo.isComplete());
         }
         vSave.setOnClickListener(new View.OnClickListener()
@@ -82,11 +79,11 @@ public class TodoDetailFragment extends Fragment
             @Override
             public void onClick(View view)
             {
-                if (mTodo == null)
+                if (mTodo == null) //New Todo
                 {
                     mViewModel.addTodo(vTitle.getText().toString(), vDesc.getText().toString(), vComplete.isChecked());
                 }
-                else
+                else //Existing Todo
                 {
                     mTodo.setName(vTitle.getText().toString());
                     mTodo.setDescription(vDesc.getText().toString());
@@ -101,38 +98,13 @@ public class TodoDetailFragment extends Fragment
             @Override
             public void onClick(View view)
             {
-                if (mTodo != null)
+                if (mTodo != null) //If Todo is existing...
                 {
                     mViewModel.deleteTodo(mTodo);
-                    getActivity().onBackPressed();
                 }
+                getActivity().onBackPressed();
             }
         });
         return vView;
-    }
-
-    @Override
-    public void onAttach(Context context)
-    {
-        super.onAttach(context);
-        if (context instanceof TodoDetailFragmentListener)
-        {
-            mListener = (TodoDetailFragmentListener) context;
-        }
-        else
-        {
-            throw new RuntimeException(context.toString() + " must implement TodoDetailFragmentListener");
-        }
-    }
-
-    @Override
-    public void onDetach()
-    {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public interface TodoDetailFragmentListener
-    {
     }
 }
