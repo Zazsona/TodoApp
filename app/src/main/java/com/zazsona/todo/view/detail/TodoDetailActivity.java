@@ -57,7 +57,6 @@ public class TodoDetailActivity extends AppCompatActivity
                         @Override
                         public Fragment getItem(int position)
                         {
-                            currentTodoIndex = position;
                             return TodoDetailFragment.newInstance(todos.get(position));    //Generate new Fragment state
                         }
 
